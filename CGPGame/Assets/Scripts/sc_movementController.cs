@@ -9,12 +9,13 @@ public class sc_movementController : MonoBehaviour
     public float deccelerationScalar;
 
 
-    private InputAction moveAction;
+    public Rigidbody2D rb;
+
+
     void Awake()
     {
-        //moveAction = InputSystem.actions.FindAction("Movement");
+        rb = GetComponent<Rigidbody2D>();
     }
-
     
     private Vector2 moveInput;
     public void OnMove(InputAction.CallbackContext context)
@@ -30,13 +31,17 @@ public class sc_movementController : MonoBehaviour
 
     void movePlayer()
     {
-        Debug.Log(moveInput);
-        if (moveInput.magnitude == 0) 
+
+        if (moveInput.magnitude <= 0.1) 
         {
-            //moveDirection -= moveDirection.normalized * Time.deltaTime * deccelerationScalar;
-            moveDirection = Vector2.zero;
+            moveDirection -= moveDirection.normalized * Time.deltaTime * deccelerationScalar;
+
+            if (moveDirection.magnitude <= maxSpeed / 100)
+            {
+                moveDirection = Vector2.zero;
+            }
         }
-        else if (moveDirection.magnitude <= maxSpeed)
+        else
         {
             moveDirection += moveInput * Time.deltaTime * accelerationScalar;
         }
@@ -46,12 +51,21 @@ public class sc_movementController : MonoBehaviour
             moveDirection = moveDirection.normalized * maxSpeed;
         }
 
-        Debug.Log(moveDirection);
-        transform.Translate(moveDirection);
+        Debug.Log(moveDirection.magnitude);
+
+        rb.MovePosition(new Vector2(transform.position.x, transform.position.y) + moveDirection);
+        
     }
 
     void Update()
     {
         movePlayer();
+    }
+
+
+
+    public Vector2 getMoveDirection()
+    {
+        return moveDirection;
     }
 }
