@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class sc_cameraFollow : MonoBehaviour
 {
@@ -6,16 +7,34 @@ public class sc_cameraFollow : MonoBehaviour
     public float cameraFOV;
     public float cameraAheadOffsetMultiplier;
 
+    public enum cameraFollowType
+    {
+        OnPlayer,
+        AheadPlayer,
+        BehindPlayer
+    }
+    public cameraFollowType cameraFollowMode;
+
+    [HeaderAttribute("Linked Objects")]
     [SerializeField] private sc_movementController playerScript;
 
 
     private void Update()
     {
 
-        //moveCameraOnPlayer();
+        
 
-        //moveCameraAheadOfPlayer();
-        moveCameraBehindPlayer();
+        switch (cameraFollowMode)
+        {
+            case cameraFollowType.OnPlayer:
+                moveCameraOnPlayer(); break;
+            case cameraFollowType.AheadPlayer:
+                moveCameraAheadOfPlayer(); break;
+            case cameraFollowType.BehindPlayer:
+                moveCameraBehindPlayer(); break;
+
+        }
+
     }
 
 

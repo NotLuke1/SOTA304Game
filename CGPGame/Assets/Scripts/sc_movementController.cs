@@ -11,10 +11,15 @@ public class sc_movementController : MonoBehaviour
 
     public Rigidbody2D rb;
 
-
+    public InputActionAsset inputActions;
+    InputAction mousePosition;
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
+
+
+        mousePosition = inputActions.FindAction("MousePosition");
+
     }
     
     private Vector2 moveInput;
@@ -51,7 +56,6 @@ public class sc_movementController : MonoBehaviour
             moveDirection = moveDirection.normalized * maxSpeed;
         }
 
-        Debug.Log(moveDirection.magnitude);
 
         rb.MovePosition(new Vector2(transform.position.x, transform.position.y) + moveDirection);
         
@@ -60,6 +64,10 @@ public class sc_movementController : MonoBehaviour
     void Update()
     {
         movePlayer();
+
+        Vector2 pos = mousePosition.ReadValue<Vector2>();
+
+        Debug.Log(pos);
     }
 
 
