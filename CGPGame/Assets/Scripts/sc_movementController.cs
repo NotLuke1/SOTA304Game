@@ -9,9 +9,9 @@ public class sc_movementController : MonoBehaviour
     public float deccelerationScalar;
 
 
-    public Rigidbody2D rb;
+    private Rigidbody2D rb;
 
-    public InputActionAsset inputActions;
+    [SerializeField] private InputActionAsset inputActions;
     InputAction mousePosition;
     void Awake()
     {
@@ -23,9 +23,10 @@ public class sc_movementController : MonoBehaviour
     }
     
     private Vector2 moveInput;
+
+    //Updates internal variable when a movement button is pressed.
     public void OnMove(InputAction.CallbackContext context)
     {
-        
 
         moveInput = context.ReadValue<Vector2>();
 
@@ -37,6 +38,12 @@ public class sc_movementController : MonoBehaviour
     void movePlayer()
     {
 
+        /*Controls player movement
+         * if there is no input, deccelerated based on set rate
+         * when speed is very low, sets speed to 0
+         * otherwise accelerates in direction of input
+         * finally caps speed at maximum
+        */
         if (moveInput.magnitude <= 0.1) 
         {
             moveDirection -= moveDirection.normalized * Time.deltaTime * deccelerationScalar;
@@ -65,15 +72,18 @@ public class sc_movementController : MonoBehaviour
     {
         movePlayer();
 
-        Vector2 pos = mousePosition.ReadValue<Vector2>();
 
-        Debug.Log(pos);
     }
 
 
-
+    //Getters and Setters for encapsulation
     public Vector2 getMoveDirection()
     {
         return moveDirection;
+    }
+
+    public Vector2 getMousePos()
+    {
+        return mousePosition.ReadValue<Vector2>();
     }
 }

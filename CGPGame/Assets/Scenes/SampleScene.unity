@@ -369,7 +369,6 @@ MonoBehaviour:
   maxSpeed: 0.15
   accelerationScalar: 2
   deccelerationScalar: 1
-  rb: {fileID: 0}
   inputActions: {fileID: -944628639613478452, guid: 0d541084852732548a0c09cb11e64b3b, type: 3}
 --- !u!114 &408449113
 MonoBehaviour:
@@ -646,7 +645,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   cameraFOV: 5
   cameraAheadOffsetMultiplier: 4
-  cameraFollowMode: 1
+  mouseOffsetMultiplier: 1
+  cameraFollowMode: 3
   playerScript: {fileID: 408449112}
 --- !u!1 &619394800
 GameObject:
