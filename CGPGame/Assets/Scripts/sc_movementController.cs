@@ -8,10 +8,13 @@ public class sc_movementController : MonoBehaviour
     public float accelerationScalar;
     public float deccelerationScalar;
 
+    [HeaderAttribute("Linked Objects")]
+    [SerializeField] private InputActionAsset inputActions;
+    [SerializeField] private sc_fieldOfView fovScript;
 
     private Rigidbody2D rb;
 
-    [SerializeField] private InputActionAsset inputActions;
+    
     InputAction mousePosition;
     void Awake()
     {
@@ -71,7 +74,10 @@ public class sc_movementController : MonoBehaviour
     void Update()
     {
         movePlayer();
+        fovScript.setOrigin(transform.position);
 
+        Vector2 mouseOffset = getMousePos() - new Vector2(Display.main.renderingWidth / 2, Display.main.renderingHeight / 2);
+        fovScript.setFacingDirection(mouseOffset);
 
     }
 
