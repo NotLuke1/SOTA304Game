@@ -78,6 +78,7 @@ public class sc_movementController : MonoBehaviour
 
         Vector2 mouseOffset = getMousePos() - new Vector2(Display.main.renderingWidth / 2, Display.main.renderingHeight / 2);
         fovScript.setFacingDirection(mouseOffset);
+        
 
     }
 

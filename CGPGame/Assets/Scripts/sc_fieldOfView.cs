@@ -73,6 +73,7 @@ public class sc_fieldOfView : MonoBehaviour
         viewMesh.vertices = vertices;
         viewMesh.uv = uvs;
         viewMesh.triangles = triangles;
+        viewMesh.bounds = new Bounds(origin, Vector3.one * 1000f);
     }
 
 
@@ -96,6 +97,8 @@ public class sc_fieldOfView : MonoBehaviour
         if (newAngle < 0) newAngle += 360;
         startAngle = newAngle + viewFov/2f;
     }
+
+    
 
 
 }
