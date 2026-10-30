@@ -15,9 +15,9 @@ TagManager:
   - Mask
   - BehindMask
   - Black
-  - 
-  - 
-  - 
+  - LitCastsShadow
+  - LitNoShadow
+  - UnlitShadow
   - 
   - 
   - 

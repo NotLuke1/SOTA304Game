@@ -117,7 +117,7 @@ MonoBehaviour:
   m_RendererFeatureMap: df6c2d805366e61aa1a3ed6563a389922f804f05f19ab881l
   m_LayerMask:
     serializedVersion: 2
-    m_Bits: 119
+    m_Bits: 7287
   m_TransparencySortMode: 0
   m_TransparencySortAxis: {x: 0, y: 1, z: 0}
   m_HDREmulationScale: 1

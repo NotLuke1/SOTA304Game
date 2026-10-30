@@ -83,6 +83,9 @@ public class sc_movementController : MonoBehaviour
     }
 
 
+
+
+
     //Getters and Setters for encapsulation
     public Vector2 getMoveDirection()
     {
