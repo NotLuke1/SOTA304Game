@@ -8,6 +8,10 @@ public class sc_movementController : MonoBehaviour
     public float accelerationScalar;
     public float deccelerationScalar;
 
+    [HeaderAttribute("Rotation Stats")]
+    [SerializeField] private float maxAngularSpeed;
+    [SerializeField] private float angularAccelerationScalar;
+
     [HeaderAttribute("Linked Objects")]
     [SerializeField] private InputActionAsset inputActions;
     [SerializeField] private sc_fieldOfView fovScript;
@@ -71,19 +75,63 @@ public class sc_movementController : MonoBehaviour
         
     }
 
+    private float currDirection = 0f;
+    private float currAngularSpeed = 0f;
+    void rotatePlayerView()
+    {
+        Vector2 mouseOffset = getMousePos() - new Vector2(Display.main.renderingWidth / 2, Display.main.renderingHeight / 2);
+        float targetDirection = calcTargetDirection(mouseOffset);
+
+        if(Mathf.Abs(targetDirection - currDirection) < 1 || Mathf.Abs(targetDirection - currDirection) > 359)
+        {
+            Debug.Log("close enough");
+            currDirection = targetDirection;
+            currAngularSpeed = 0f;
+        }
+        else
+        {
+
+            if((currDirection > targetDirection && currDirection - targetDirection < 180) || (currDirection < targetDirection && targetDirection - currDirection > 180))
+            {
+
+                currAngularSpeed -= angularAccelerationScalar;
+                Mathf.Clamp(currAngularSpeed, -maxAngularSpeed, maxAngularSpeed);
+            }
+            else
+            {
+
+                currAngularSpeed += angularAccelerationScalar;
+                Mathf.Clamp(currAngularSpeed, -maxAngularSpeed, maxAngularSpeed);
+            }
+            //currDirection += currAngularSpeed;
+        }
+        currDirection += currAngularSpeed;
+
+    }
+
+
+
     void Update()
     {
         movePlayer();
         fovScript.setOrigin(transform.position);
 
-        Vector2 mouseOffset = getMousePos() - new Vector2(Display.main.renderingWidth / 2, Display.main.renderingHeight / 2);
-        fovScript.setFacingDirection(mouseOffset);
+        rotatePlayerView();
+        fovScript.setFacingDirection(currDirection);
         
 
     }
 
 
 
+    public float calcTargetDirection(Vector3 newFacingDirection)
+    {
+        newFacingDirection = newFacingDirection.normalized;
+        float newAngle = Mathf.Atan2(newFacingDirection.y, newFacingDirection.x) * Mathf.Rad2Deg;
+        if (newAngle < 0) newAngle += 360;
+   
+        return newAngle;
+    }
 
 
     //Getters and Setters for encapsulation

@@ -14,7 +14,7 @@ public class sc_fieldOfView : MonoBehaviour
 
     private Mesh viewMesh;
     private float angleBetweenRays;
-    private float startAngle = 0;
+    public float startAngle = 0;
     private Vector3 origin = Vector3.zero;
 
     void Start()
@@ -102,13 +102,19 @@ public class sc_fieldOfView : MonoBehaviour
         return new Vector3(Mathf.Cos(angleRad), Mathf.Sin(angleRad));
     }
 
-    
+    /*
     public void setFacingDirection(Vector3 newFacingDirection)
     {
         newFacingDirection = newFacingDirection.normalized;
         float newAngle = Mathf.Atan2(newFacingDirection.y, newFacingDirection.x) * Mathf.Rad2Deg;
         if (newAngle < 0) newAngle += 360;
         startAngle = newAngle + viewFov/2f;
+    }
+    */
+
+    public void setFacingDirection(float newFacingAngle)
+    {
+        startAngle = newFacingAngle + viewFov / 2f;
     }
 
     //Getters and Setters
@@ -117,6 +123,16 @@ public class sc_fieldOfView : MonoBehaviour
     {
         origin = newOrigin;
 
+    }
+
+    public float getRotation()
+    {
+        return startAngle - viewFov/2f;
+    }
+
+    public float getFOV()
+    {
+        return viewFov;
     }
 
 
