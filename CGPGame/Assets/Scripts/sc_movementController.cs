@@ -11,6 +11,9 @@ public class sc_movementController : MonoBehaviour
     [HeaderAttribute("Rotation Stats")]
     [SerializeField] private float maxAngularSpeed;
     [SerializeField] private float angularAccelerationScalar;
+    //Minimum angular speed required for the flashlight to immediately snap to the mouse when near the mouse direction.
+    [SerializeField] private float snapToMouseMinimumSpeed;
+
 
     [HeaderAttribute("Linked Objects")]
     [SerializeField] private InputActionAsset inputActions;
@@ -82,9 +85,9 @@ public class sc_movementController : MonoBehaviour
         Vector2 mouseOffset = getMousePos() - new Vector2(Display.main.renderingWidth / 2, Display.main.renderingHeight / 2);
         float targetDirection = calcTargetDirection(mouseOffset);
 
-        if(Mathf.Abs(targetDirection - currDirection) < 1 || Mathf.Abs(targetDirection - currDirection) > 359)
+        if((Mathf.Abs(targetDirection - currDirection) < 1 || Mathf.Abs(targetDirection - currDirection) > 359) && currAngularSpeed <= snapToMouseMinimumSpeed)
         {
-            Debug.Log("close enough");
+
             currDirection = targetDirection;
             currAngularSpeed = 0f;
         }
@@ -95,17 +98,20 @@ public class sc_movementController : MonoBehaviour
             {
 
                 currAngularSpeed -= angularAccelerationScalar;
-                Mathf.Clamp(currAngularSpeed, -maxAngularSpeed, maxAngularSpeed);
+                currAngularSpeed = Mathf.Clamp(currAngularSpeed, -maxAngularSpeed, maxAngularSpeed);
             }
             else
             {
 
                 currAngularSpeed += angularAccelerationScalar;
-                Mathf.Clamp(currAngularSpeed, -maxAngularSpeed, maxAngularSpeed);
+                currAngularSpeed = Mathf.Clamp(currAngularSpeed, -maxAngularSpeed, maxAngularSpeed);
             }
-            //currDirection += currAngularSpeed;
+            if((currDirection < targetDirection && currDirection + currAngularSpeed * Time.deltaTime > targetDirection) || (currDirection > targetDirection && currDirection + currAngularSpeed * Time.deltaTime < targetDirection)){
+                currAngularSpeed = currAngularSpeed / 1.2f;
+            }
         }
-        currDirection += currAngularSpeed;
+        currDirection += currAngularSpeed * Time.deltaTime;
+        currDirection = currDirection % 360;
 
     }
 
