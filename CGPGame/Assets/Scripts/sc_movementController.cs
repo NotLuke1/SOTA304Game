@@ -150,4 +150,9 @@ public class sc_movementController : MonoBehaviour
     {
         return mousePosition.ReadValue<Vector2>();
     }
+
+    public void setCurrentView(sc_fieldOfView newView)
+    {
+        fovScript = newView;
+    }
 }
