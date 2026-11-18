@@ -19,9 +19,9 @@ public class sc_actionController : MonoBehaviour
         if (context.started)
         {
             Debug.Log("Photo");
-            flashlightViewObject.GetComponent<MeshRenderer>().enabled = false;
-            photoViewObject.GetComponent<MeshRenderer>().enabled = true;
-            GetComponent<sc_movementController>().setCurrentView(photoViewObject.GetComponent<sc_fieldOfView>());
+            //flashlightViewObject.GetComponent<MeshRenderer>().enabled = false;
+            //photoViewObject.GetComponent<MeshRenderer>().enabled = true;
+            //GetComponent<sc_movementController>().setCurrentView(photoViewObject.GetComponent<sc_fieldOfView>());
         }
 
         
