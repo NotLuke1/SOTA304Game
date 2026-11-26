@@ -125,7 +125,7 @@ public class sc_movementController : MonoBehaviour
         rotatePlayerView();
         fovScript.setFacingDirection(currDirection);
         
-
+        fovScript.updateFOVMesh();
     }
 
 

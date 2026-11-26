@@ -28,7 +28,7 @@ public class sc_fieldOfView : MonoBehaviour
 
     //Creates a mesh in runtime for the view cone. Raycasts used to block view when covered by objects. Variable rayCount is the number of raycasts used.
 
-    void LateUpdate()
+    public void updateFOVMesh()
     {
 
         //Initiates structures that are used to create the mesh
