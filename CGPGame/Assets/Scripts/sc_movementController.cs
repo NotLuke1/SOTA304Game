@@ -78,11 +78,13 @@ public class sc_movementController : MonoBehaviour
         
     }
 
-    private float currDirection = 0f;
+    public float currDirection = 0f;
     private float currAngularSpeed = 0f;
     void rotatePlayerView()
     {
+        //Gets the mouseposition relative to the screen's centre
         Vector2 mouseOffset = getMousePos() - new Vector2(Display.main.renderingWidth / 2, Display.main.renderingHeight / 2);
+        //Converts the cartesian position to an angular direction
         float targetDirection = calcTargetDirection(mouseOffset);
 
         if((Mathf.Abs(targetDirection - currDirection) < 1 || Mathf.Abs(targetDirection - currDirection) > 359) && currAngularSpeed <= snapToMouseMinimumSpeed)
@@ -112,6 +114,7 @@ public class sc_movementController : MonoBehaviour
         }
         currDirection += currAngularSpeed * Time.deltaTime;
         currDirection = currDirection % 360;
+        if (currDirection < 0) currDirection += 360;
 
     }
 
